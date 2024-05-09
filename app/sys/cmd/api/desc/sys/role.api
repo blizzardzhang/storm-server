@@ -1,0 +1,96 @@
+syntax = "v1"
+
+info(
+    title: "role service api"
+    desc: "role service api"
+    author: "Blizzard"
+    email: "blizzardzhang@icloud.com"
+    version: "0.0.1"
+)
+
+
+type (
+    RoleAddReq {
+        Type int `json:"type"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Sort int `json:"sort"`
+        Remark string `json:"remark"`
+    }
+    RoleAddResp {
+        Data string `json:"data"`
+    }
+
+    RoleInfoReq {
+        Id string `json:"id"`
+    }
+    RoleInfoResp {
+        Id string `json:"id"`
+        Type int `json:"type"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Sort int `json:"sort"`
+        Remark string `json:"remark"`
+        CreateAt string `json:"createAt"`
+        UpdateAt string `json:"updateAt"`
+        CreateUser string `json:"createUser"`
+        UpdateUser string `json:"updateUser"`
+        Status int `json:"status"`
+    }
+
+    RoleListReq {
+        Current int `json:"current"`
+        PageSize int `json:"page_size"`
+        Name string `json:"name"`
+    }
+    RoleListResp {
+        Records []RoleInfoResp `json:"records"`
+        Current int `json:"current"`
+        PageSize int `json:"pageSize"`
+        Total int `json:"total"`
+        TotalPage int `json:"totalPage"`
+    }
+
+    RoleUpdateReq {
+        Id string `json:"id"`
+        Type int `json:"type"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Sort int `json:"sort"`
+        Remark string `json:"remark"`
+    }
+    RoleUpdateResp {
+        Data string `json:"data"`
+    }
+
+    RoleDeleteReq {
+        Ids []string `json:"ids"`
+    }
+    RoleDeleteResp {
+        Data string `json:"data"`
+    }
+)
+
+@server(
+    jwt: JwtAuth
+    group: sys/role
+    middleware: CheckUrl
+    prefix: /api/sys/role
+)
+service sys-api {
+    @handler SaveRole
+    post /save (RoleAddReq) returns (RoleAddResp)
+
+    @handler GetRole
+    post /detail (RoleInfoReq) returns (RoleInfoResp)
+
+    @handler ListRole
+    post /list (RoleListReq) returns (RoleListResp)
+
+    @handler UpdateRole
+    post /update (RoleUpdateReq) returns (RoleUpdateResp)
+
+    @handler DeleteRole
+    post /delete (RoleDeleteReq) returns (RoleDeleteResp)
+}
+

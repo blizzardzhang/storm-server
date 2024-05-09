@@ -1,0 +1,108 @@
+syntax = "v1"
+
+info(
+    title: "permission service api"
+    desc: "permission service api"
+    author: "Blizzard"
+    email: "blizzardzhang@icloud.com"
+    version: "0.0.1"
+)
+
+
+type (
+    SavePermissionReq {
+        ParentId string `json:"parentId"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Component string `json:"component"`
+        Icon string `json:"icon"`
+        Path string `json:"path"`
+        Sort int `json:"sort"`
+        Category string `json:"category"`
+    }
+    SavePermissionResp {
+        Data string `json:"data"`
+    }
+
+    PermissionDetailReq {
+        Id string `json:"id"`
+    }
+    PermissionDetailResp {
+        Id string `json:"id"`
+        ParentId string `json:"parentId"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Component string `json:"component"`
+        Icon string `json:"icon"`
+        Path string `json:"path"`
+        Sort int `json:"sort"`
+        Category string `json:"category"`
+        CreateAt string `json:"createAt"`
+        UpdateAt string `json:"updateAt"`
+        CreateUser string `json:"createUser"`
+        UpdateUser string `json:"updateUser"`
+        Status int `json:"status"`
+    }
+
+    ListPermissionReq {
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Category string `json:"category"`
+    }
+    ListPermissionResp {
+        Records []PermissionDetailResp `json:"records"`
+    }
+
+    UpdatePermissionReq {
+        Id string `json:"id"`
+        ParentId string `json:"parentId"`
+        Name string `json:"name"`
+        Code string `json:"code"`
+        Component string `json:"component"`
+        Icon string `json:"icon"`
+        Path string `json:"path"`
+        Sort int `json:"sort"`
+        Category string `json:"category"`
+    }
+    UpdatePermissionResp {
+        Data string `json:"data"`
+    }
+
+    DeletePermissionReq {
+        Ids []string `json:"ids"`
+    }
+    DeletePermissionResp {
+        Data string `json:"data"`
+    }
+
+    RouteResp {
+        Records []PermissionDetailResp `json:"records"`
+    }
+)
+
+@server(
+    jwt: JwtAuth
+    group: sys/permission
+    middleware: CheckUrl
+    prefix: /api/sys/permission
+)
+service sys-api {
+    @handler SavePermission
+    post /save (SavePermissionReq) returns (SavePermissionResp)
+
+    @handler PermissionDetail
+    post /detail (PermissionDetailReq) returns (PermissionDetailResp)
+
+    @handler ListPermission
+    post /list (ListPermissionReq) returns (ListPermissionResp)
+
+    @handler UpdatePermission
+    post /update (UpdatePermissionReq) returns (UpdatePermissionResp)
+
+    @handler DeletePermission
+    post /delete (DeletePermissionReq) returns (DeletePermissionResp)
+
+    @handler Route
+    get /route returns (RouteResp)
+}
+

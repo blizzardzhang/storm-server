@@ -1,0 +1,113 @@
+syntax = "v1"
+
+info(
+    title: "app service api"
+    desc: "app service api"
+    author: "Blizzard"
+    email: "blizzardzhang@icloud.com"
+    version: "0.0.1"
+)
+
+type (
+    AddAppReq {
+        Name string `json:"name"`
+        AppId string `json:"appId"`
+        Key string `json:"key"`
+        Secret string `json:"secret"`
+        GrantType string `json:"grantType"`
+        RedirectUri string `json:"redirectUri"`
+        AdditionalInformation string `json:"additionalInformation"`
+        AccessTokenValidity int64 `json:"accessTokenValidity"`
+        RefreshTokenValidity int64 `json:"refreshTokenValidity"`
+    }
+    AddAppResp {
+        Data string `json:"data"`
+    }
+
+    AppInfoReq {
+        Id string `json:"id"`
+    }
+    AppInfoResp {
+        Id string `json:"id"`
+        Name string `json:"name"`
+        AppId string `json:"appId"`
+        Key string `json:"key"`
+        Secret string `json:"secret"`
+        GrantType string `json:"grantType"`
+        RedirectUri string `json:"redirectUri"`
+        AdditionalInformation string `json:"additionalInformation"`
+        AccessTokenValidity int64 `json:"accessTokenValidity"`
+        CreateAt string `json:"createAt"`
+        UpdateAt string `json:"updateAt"`
+        Status int `json:"status"`
+        CreateUser string `json:"createUser"`
+        UpdateUser string `json:"updateUser"`
+    }
+
+    ListAppReq {
+        Current int `json:"current,default=1"`
+        PageSize int `json:"pageSize,default=10"`
+        Name string `json:"name,optional"`
+    }
+    ListAppResp {
+        Records []AppInfoResp `json:"records"`
+        Current int `json:"current"`
+        PageSize int `json:"pageSize"`
+        Total int `json:"total"`
+        TotalPage int `json:"totalPage"`
+    }
+
+    UpdateAppReq {
+        Id string `json:"id"`
+        Name string `json:"name"`
+        AppId string `json:"appId"`
+        Key string `json:"key"`
+        Secret string `json:"secret"`
+        GrantType string `json:"grantType"`
+        RedirectUri string `json:"redirectUri"`
+        AdditionalInformation string `json:"additionalInformation"`
+        AccessTokenValidity int64 `json:"accessTokenValidity"`
+        Status int64 `json:"status"`
+    }
+    UpdateAppResp {
+        Data string `json:"data"`
+    }
+
+    DeleteAppReq {
+        Ids []string `json:"ids"`
+    }
+    DeleteAppResp {
+        Data string `json:"data"`
+    }
+)
+
+
+
+@server(
+    jwt: JwtAuth
+    group: sys/app
+    middleware: CheckUrl
+    prefix: /api/sys/app
+)
+service sys-api {
+    // @doc "新增客户端"
+    @handler SaveApp
+    post /save (AddAppReq) returns (AddAppResp)
+
+    //@doc "客户端分页"
+    @handler ListApp
+    post /list (ListAppReq) returns (ListAppResp)
+
+    // @doc "客户端详情""
+    @handler AppDetail
+    post /info (AppInfoReq) returns (AppInfoResp)
+
+    // @doc "修改客户端"
+    @handler UpdateApp
+    post /update (UpdateAppReq) returns (UpdateAppResp)
+
+    // @doc "删除客户端"
+    @handler DeleteApp
+    post /delete (DeleteAppReq) returns (DeleteAppResp)
+}
+

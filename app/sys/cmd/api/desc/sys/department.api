@@ -1,0 +1,88 @@
+syntax = "v1"
+
+info(
+    title: "department service api"
+    desc: "department service api"
+    author: "Blizzard"
+    email: "blizzardzhang@icloud.com"
+    version: "0.0.1"
+)
+
+
+type (
+    AddDepartmentReq {
+        ParentId string `json:"parentId"`
+        Ancestors string `json:"ancestors"`
+        Name string `json:"name"`
+        Sort int `json:"sort"`
+    }
+    AddDepartmentResp {
+        Data string `json:"data"`
+    }
+
+    DepartmentInfoReq {
+        Id string `json:"id"`
+    }
+    DepartmentInfoResp {
+        Id string `json:"id"`
+        ParentId string `json:"parentId"`
+        Ancestors string `json:"ancestors"`
+        Name string `json:"name"`
+        Sort int `json:"sort"`
+        CreateAt string `json:"createAt"`
+        UpdateAt string `json:"updateAt"`
+        CreateUser string `json:"createUser"`
+        UpdateUser string `json:"updateUser"`
+        Status int `json:"ststus"`
+    }
+
+    ListDepartmentReq {
+        Name string `json:"name"`
+    }
+    ListDepartmentResp {
+        Records []DepartmentInfoResp `json:"records"`
+    }
+
+    UpdateDepartmentReq {
+        Id string `json:"id"`
+        ParentId string `json:"parentId"`
+        Ancestors string `json:"ancestors"`
+        Name string `json:"name"`
+        Sort int `json:"sort"`
+    }
+    UpdateDepartmentResp {
+        Data string `json:"data"`
+    }
+
+    DeleteDepartmentReq {
+        Ids []string `json:"ids"`
+    }
+    DeleteDepartmentResp {
+        Data string `json:"data"`
+    }
+)
+
+@server(
+    jwt: JwtAuth
+    group: sys/department
+    middleware: CheckUrl
+    prefix: /api/sys/department
+)
+service sys-api {
+    @handler AddDepartment
+    post /save (AddDepartmentReq) returns (AddDepartmentResp)
+
+    @handler DepartmentInfo
+    post /detail (DepartmentInfoReq) returns (DepartmentInfoResp)
+
+    @handler ListDepartment
+    post /list (ListDepartmentReq) returns (ListDepartmentResp)
+
+    @handler UpdateDepartment
+    post /update (UpdateDepartmentReq) returns (UpdateDepartmentResp)
+
+    @handler DeleteDepartment
+    post /delete (DeleteDepartmentReq) returns (DeleteDepartmentResp)
+}
+
+

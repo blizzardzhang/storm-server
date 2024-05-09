@@ -1,0 +1,32 @@
+Name: storm-api
+Host: 0.0.0.0
+Port: 3000
+
+#sys rpc
+sysRpc:
+  Etcd:
+    Hosts:
+      - 159.75.183.42:2379
+    Key: sys.rpc
+
+JwtAuth:
+  AccessSecret: ad879037-c7a4-4063-9236-6bfc35d54b7d
+
+Log:
+  ServiceName: sys-api
+  Encoding: plain
+  Stat: false
+  TimeFormat: 2006-01-02 15:04:05
+  Level: info
+
+
+#WxMiniConf 测试小程序
+WxMiniConf:
+  AppId: wxc88e6306171c1611
+  Secret: ba800503a678f4def7dbb46424e3cb6d
+
+RedisConf:
+  Host: 159.75.183.42:26379
+  Type: node
+  Pass: ""
+  Db: 0

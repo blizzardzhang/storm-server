@@ -1,0 +1,128 @@
+syntax = "v1"
+
+info(
+    title: "user service api"
+    desc: "user service api"
+    author: "Blizzard"
+    email: "blizzardzhang@icloud.com"
+    version: "0.0.1"
+)
+
+type (
+    LoginRequest {
+        AppId string `json:"appId"`
+        Account string `json:"account"`
+        Password string `json:"password"`
+    }
+    LoginResp {
+        AccessToken string `json:"token"`
+        AccessExpire int64 `json:"accessExpire"`
+        RefreshAfter int64 `json:"refreshAfter"`
+        Permissions []string `json:"permissions"`
+        User UserInfo `json:"user"`
+    }
+
+    UserInfoReq {
+        Id string `json:"id"`
+    }
+    UserInfo {
+        Id string `json:"id"`
+        AppId string `json:"appId"`
+        DepartmentId string `json:"departmentId"`
+        Account string `json:"account"`
+        Name string `json:"name"`
+        NickName string `json:"nickName"`
+        Phone string `json:"phone"`
+        CreateAt string `json:"createAt"`
+        UpdateAt string `json:"updateAt"`
+        CreateUser string `json:"createUser"`
+        UpdateUser string `json:"updateUser"`
+        Status int `json:"status"`
+    }
+
+    UserPageReq {
+        AppId string `json:"appId"`
+        Account string `json:"account"`
+        Phone string `json:"phone"`
+        Name string `json:"name"`
+        Current int `json:"current"`
+        PageSize int `json:"pageSize"`
+    }
+    UserPageResp {
+        Records []UserInfo `json:"records"`
+        Current int `json:"current"`
+        PageSize int `json:"pageSize"`
+        Total int `json:"total"`
+        TotalPage int `json:"totalPage"`
+    }
+
+    UpdateUserReq {
+        Id string `json:"id"`
+        AppId string `json:"appId"`
+        DepartmentId string `json:"departmentId"`
+        Account string `json:"account"`
+        Name string `json:"name"`
+        NickName string `json:"nickName"`
+        Phone string `json:"phone"`
+        Status int `json:"status"`
+    }
+    UpdateUserResp {
+        Data string `json:"data"`
+    }
+
+    DeleteUserReq {
+        Ids []string `json:"ids"`
+    }
+    DeleteUserResp {
+        Data string `json:"data"`
+    }
+)
+
+type (
+    WXMiniAuthReq {
+        AppId         string `json:"appId"`
+        Code          string `json:"code"`
+    }
+    WXMiniAuthResp {
+        AccessToken string `json:"token"`
+        AccessExpire int64 `json:"accessExpire"`
+        RefreshAfter int64 `json:"refreshAfter"`
+        User UserInfo `json:"user"`
+    }
+)
+
+//no need login
+@server(
+    group: sys/user
+    prefix: /api/sys/user
+)
+service sys-api {
+    @handler Login
+    post /login (LoginRequest) returns (LoginResp)
+    @handler WXMiniAuth
+    post /wxLogin (WXMiniAuthReq) returns (WXMiniAuthResp)
+}
+
+//need login
+@server(
+    jwt: JwtAuth
+    group: sys/user
+    middleware: CheckUrl
+    prefix: /api/sys/user
+)
+service sys-api {
+    @handler UserInfo
+    post /info (UserInfoReq) returns (UserInfo)
+
+    @handler UserPage
+    post /page (UserPageReq) returns (UserPageResp)
+
+    @handler UpdateUser
+    post /update (UpdateUserReq) returns (UpdateUserResp)
+
+    @handler DeleteUser
+    post /delete (DeleteUserReq) returns (DeleteUserResp)
+}
+
+
+

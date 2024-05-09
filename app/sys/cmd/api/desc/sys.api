@@ -1,0 +1,17 @@
+syntax = "v1"
+
+import "sys/user.api"
+import "sys/app.api"
+import "sys/department.api"
+import "sys/role.api"
+import "sys/permission.api"
+
+info (
+	title:  "code-storm"
+	desc:   "code-storm gateway"
+	author: "Blizzard"
+	email:  "blizzardzhang@icloud.com"
+)
+
+//生成api代码 goctl api go -api sys.api -dir ../ --style goZero
+//生成文档 goctl api plugin -plugin goctl-swagger="swagger -filename storm.json" -api sys.api -dir ./doc
