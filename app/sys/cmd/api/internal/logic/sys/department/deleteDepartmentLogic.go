@@ -2,6 +2,7 @@ package department
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/departmentrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,13 @@ func NewDeleteDepartmentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *DeleteDepartmentLogic) DeleteDepartment(req *types.DeleteDepartmentReq) (resp *types.DeleteDepartmentResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.DepartmentRpc.DepartmentDelete(l.ctx, &departmentrpc.DeleteDepartmentReq{
+		Ids: req.Ids,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.DeleteDepartmentResp{
+		Data: res.Data,
+	}, nil
 }

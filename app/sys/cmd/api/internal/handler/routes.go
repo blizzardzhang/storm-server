@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	sysapp "storm-server/app/sys/cmd/api/internal/handler/sys/app"
+	sysclient "storm-server/app/sys/cmd/api/internal/handler/sys/client"
 	sysdepartment "storm-server/app/sys/cmd/api/internal/handler/sys/department"
 	syspermission "storm-server/app/sys/cmd/api/internal/handler/sys/permission"
 	sysrole "storm-server/app/sys/cmd/api/internal/handler/sys/role"
@@ -22,32 +22,32 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				{
 					Method:  http.MethodPost,
 					Path:    "/delete",
-					Handler: sysapp.DeleteAppHandler(serverCtx),
+					Handler: sysclient.DeleteClientHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/info",
-					Handler: sysapp.AppDetailHandler(serverCtx),
+					Handler: sysclient.ClientDetailHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/list",
-					Handler: sysapp.ListAppHandler(serverCtx),
+					Handler: sysclient.ListClientHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/save",
-					Handler: sysapp.SaveAppHandler(serverCtx),
+					Handler: sysclient.SaveClientHandler(serverCtx),
 				},
 				{
 					Method:  http.MethodPost,
 					Path:    "/update",
-					Handler: sysapp.UpdateAppHandler(serverCtx),
+					Handler: sysclient.UpdateClientHandler(serverCtx),
 				},
 			}...,
 		),
 		rest.WithJwt(serverCtx.Config.JwtAuth.AccessSecret),
-		rest.WithPrefix("/api/sys/app"),
+		rest.WithPrefix("/api/sys/client"),
 	)
 
 	server.AddRoutes(

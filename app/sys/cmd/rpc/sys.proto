@@ -89,10 +89,10 @@ service UserRpc {
   rpc GetUserRole(GetUerRoleReq) returns(GetUerRoleResp);
 }
 
-//App start
-message AddAppReq {
+//client start
+message AddClientReq {
   string name = 1;
-  string appId = 2;
+  string clientId = 2;
   string key = 3;
   string secret = 4;
   string grantType = 5;
@@ -102,17 +102,17 @@ message AddAppReq {
   int64 RefreshTokenValidity = 9;
 
 }
-message AddAppResp {
+message AddClientResp {
   string data = 1;
 }
 
-message AppInfoReq{
+message ClientInfoReq{
   string id = 1;
 }
-message AppInfoResp{
+message ClientInfoResp{
   string id = 1;
   string name = 2;
-  string appId = 3;
+  string clientId = 3;
   string key = 4;
   string secret = 5;
   string grantType = 6;
@@ -127,23 +127,23 @@ message AppInfoResp{
   string updateUser = 15;
 }
 
-message ListAppReq{
+message ListClientReq{
   int64 current = 1;
   int64 pageSize = 2;
   string name = 3;
 }
-message ListAppResp{
+message ListClientResp{
   int64 total = 1;
   int64 pageSize = 2;
   int64 current = 3;
   int64 totalPage = 4;
-  repeated AppInfoResp list = 5;
+  repeated ClientInfoResp list = 5;
 }
 
-message UpdateAppReq{
+message UpdateClientReq{
   string id = 1;
   string name = 2;
-  string appId = 3;
+  string clientId = 3;
   string key = 4;
   string secret = 5;
   string grantType = 6;
@@ -152,25 +152,25 @@ message UpdateAppReq{
   int64 accessTokenValidity = 9;
   int64 RefreshTokenValidity = 10;
 }
-message UpdateAppResp{
+message UpdateClientResp{
   string data = 1;
 }
 
-message DeleteAppReq{
+message DeleteClientReq{
   repeated string ids = 1;
 }
-message DeleteAppResp{
+message DeleteClientResp{
   string data = 1;
 }
 
-service AppRpc {
-  rpc AppAdd(AddAppReq) returns (AddAppResp);
-  rpc AppInfo(AppInfoReq) returns (AppInfoResp);
-  rpc AppList(ListAppReq) returns (ListAppResp);
-  rpc AppUpdate(UpdateAppReq) returns (UpdateAppResp);
-  rpc AppDelete(DeleteAppReq) returns (DeleteAppResp);
+service clientRpc {
+  rpc clientAdd(AddClientReq) returns (AddClientResp);
+  rpc clientInfo(ClientInfoReq) returns (ClientInfoResp);
+  rpc clientList(ListClientReq) returns (ListClientResp);
+  rpc clientUpdate(UpdateClientReq) returns (UpdateClientResp);
+  rpc clientDelete(DeleteClientReq) returns (DeleteClientResp);
 }
-//App end
+//client end
 
 //Department start
 message AddDepartmentReq {

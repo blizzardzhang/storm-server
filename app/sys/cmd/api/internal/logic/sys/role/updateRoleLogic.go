@@ -2,6 +2,7 @@ package role
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/rolerpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,17 @@ func NewUpdateRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Update
 }
 
 func (l *UpdateRoleLogic) UpdateRole(req *types.RoleUpdateReq) (resp *types.RoleUpdateResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.RoleRpc.RoleUpdate(l.ctx, &rolerpc.UpdateRoleReq{
+		Id:     req.Id,
+		Name:   req.Name,
+		Code:   req.Code,
+		Sort:   int64(req.Sort),
+		Remark: req.Remark,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.RoleUpdateResp{
+		Data: res.Data,
+	}, nil
 }

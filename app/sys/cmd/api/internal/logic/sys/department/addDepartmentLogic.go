@@ -2,6 +2,7 @@ package department
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/sysClient"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,16 @@ func NewAddDepartmentLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Add
 }
 
 func (l *AddDepartmentLogic) AddDepartment(req *types.AddDepartmentReq) (resp *types.AddDepartmentResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.DepartmentRpc.DepartmentAdd(l.ctx, &sysClient.AddDepartmentReq{
+		ParentId:  req.ParentId,
+		Ancestors: req.Ancestors,
+		Name:      req.Name,
+		Sort:      int64(req.Sort),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.AddDepartmentResp{
+		Data: res.Data,
+	}, nil
 }

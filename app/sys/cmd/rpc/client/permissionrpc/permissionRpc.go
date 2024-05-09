@@ -13,18 +13,18 @@ import (
 )
 
 type (
-	AddAppReq               = sysClient.AddAppReq
-	AddAppResp              = sysClient.AddAppResp
+	AddClientReq            = sysClient.AddClientReq
+	AddClientResp           = sysClient.AddClientResp
 	AddDepartmentReq        = sysClient.AddDepartmentReq
 	AddDepartmentResp       = sysClient.AddDepartmentResp
 	AddPermissionReq        = sysClient.AddPermissionReq
 	AddPermissionResp       = sysClient.AddPermissionResp
 	AddRoleReq              = sysClient.AddRoleReq
 	AddRoleResp             = sysClient.AddRoleResp
-	AppInfoReq              = sysClient.AppInfoReq
-	AppInfoResp             = sysClient.AppInfoResp
-	DeleteAppReq            = sysClient.DeleteAppReq
-	DeleteAppResp           = sysClient.DeleteAppResp
+	ClientInfoReq           = sysClient.ClientInfoReq
+	ClientInfoResp          = sysClient.ClientInfoResp
+	DeleteClientReq         = sysClient.DeleteClientReq
+	DeleteClientResp        = sysClient.DeleteClientResp
 	DeleteDepartmentReq     = sysClient.DeleteDepartmentReq
 	DeleteDepartmentResp    = sysClient.DeleteDepartmentResp
 	DeletePermissionReq     = sysClient.DeletePermissionReq
@@ -43,8 +43,8 @@ type (
 	GrantRolePermissionResp = sysClient.GrantRolePermissionResp
 	GrantRoleReq            = sysClient.GrantRoleReq
 	GrantRoleResp           = sysClient.GrantRoleResp
-	ListAppReq              = sysClient.ListAppReq
-	ListAppResp             = sysClient.ListAppResp
+	ListClientReq           = sysClient.ListClientReq
+	ListClientResp          = sysClient.ListClientResp
 	ListDepartmentReq       = sysClient.ListDepartmentReq
 	ListDepartmentResp      = sysClient.ListDepartmentResp
 	ListPermissionReq       = sysClient.ListPermissionReq
@@ -58,8 +58,8 @@ type (
 	RoleInfoReq             = sysClient.RoleInfoReq
 	RoleInfoResp            = sysClient.RoleInfoResp
 	UerInfoReq              = sysClient.UerInfoReq
-	UpdateAppReq            = sysClient.UpdateAppReq
-	UpdateAppResp           = sysClient.UpdateAppResp
+	UpdateClientReq         = sysClient.UpdateClientReq
+	UpdateClientResp        = sysClient.UpdateClientResp
 	UpdateDepartmentReq     = sysClient.UpdateDepartmentReq
 	UpdateDepartmentResp    = sysClient.UpdateDepartmentResp
 	UpdatePermissionReq     = sysClient.UpdatePermissionReq

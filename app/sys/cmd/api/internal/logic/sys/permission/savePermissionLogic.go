@@ -2,6 +2,7 @@ package permission
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/permissionrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,21 @@ func NewSavePermissionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Sa
 }
 
 func (l *SavePermissionLogic) SavePermission(req *types.SavePermissionReq) (resp *types.SavePermissionResp, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.PermissionRpc.PermissionAdd(l.ctx, &permissionrpc.AddPermissionReq{
+		Name:      req.Name,
+		Code:      req.Code,
+		Component: req.Component,
+		Icon:      req.Icon,
+		Path:      req.Path,
+		Sort:      int64(req.Sort),
+		Category:  req.Category,
+		ParentId:  req.ParentId,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.SavePermissionResp{
+		Data: res.Data,
+	}, nil
 }

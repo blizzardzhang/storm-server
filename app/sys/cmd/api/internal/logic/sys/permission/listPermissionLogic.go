@@ -2,6 +2,8 @@ package permission
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"storm-server/app/sys/cmd/rpc/client/permissionrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +26,22 @@ func NewListPermissionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Li
 }
 
 func (l *ListPermissionLogic) ListPermission(req *types.ListPermissionReq) (resp *types.ListPermissionResp, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.PermissionRpc.PermissionList(l.ctx, &permissionrpc.ListPermissionReq{
+		Code:     req.Code,
+		Category: req.Category,
+		Name:     req.Name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var list []types.PermissionDetailResp
+	for _, item := range res.List {
+		var perm types.PermissionDetailResp
+		_ = copier.Copy(&perm, item)
+		list = append(list, perm)
+	}
 
-	return
+	return &types.ListPermissionResp{
+		Records: list,
+	}, nil
 }

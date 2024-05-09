@@ -331,237 +331,237 @@ var UserRpc_ServiceDesc = grpc.ServiceDesc{
 }
 
 const (
-	AppRpc_AppAdd_FullMethodName    = "/sysClient.AppRpc/AppAdd"
-	AppRpc_AppInfo_FullMethodName   = "/sysClient.AppRpc/AppInfo"
-	AppRpc_AppList_FullMethodName   = "/sysClient.AppRpc/AppList"
-	AppRpc_AppUpdate_FullMethodName = "/sysClient.AppRpc/AppUpdate"
-	AppRpc_AppDelete_FullMethodName = "/sysClient.AppRpc/AppDelete"
+	ClientRpc_ClientAdd_FullMethodName    = "/sysClient.clientRpc/clientAdd"
+	ClientRpc_ClientInfo_FullMethodName   = "/sysClient.clientRpc/clientInfo"
+	ClientRpc_ClientList_FullMethodName   = "/sysClient.clientRpc/clientList"
+	ClientRpc_ClientUpdate_FullMethodName = "/sysClient.clientRpc/clientUpdate"
+	ClientRpc_ClientDelete_FullMethodName = "/sysClient.clientRpc/clientDelete"
 )
 
-// AppRpcClient is the client API for AppRpc service.
+// ClientRpcClient is the client API for ClientRpc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type AppRpcClient interface {
-	AppAdd(ctx context.Context, in *AddAppReq, opts ...grpc.CallOption) (*AddAppResp, error)
-	AppInfo(ctx context.Context, in *AppInfoReq, opts ...grpc.CallOption) (*AppInfoResp, error)
-	AppList(ctx context.Context, in *ListAppReq, opts ...grpc.CallOption) (*ListAppResp, error)
-	AppUpdate(ctx context.Context, in *UpdateAppReq, opts ...grpc.CallOption) (*UpdateAppResp, error)
-	AppDelete(ctx context.Context, in *DeleteAppReq, opts ...grpc.CallOption) (*DeleteAppResp, error)
+type ClientRpcClient interface {
+	ClientAdd(ctx context.Context, in *AddClientReq, opts ...grpc.CallOption) (*AddClientResp, error)
+	ClientInfo(ctx context.Context, in *ClientInfoReq, opts ...grpc.CallOption) (*ClientInfoResp, error)
+	ClientList(ctx context.Context, in *ListClientReq, opts ...grpc.CallOption) (*ListClientResp, error)
+	ClientUpdate(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*UpdateClientResp, error)
+	ClientDelete(ctx context.Context, in *DeleteClientReq, opts ...grpc.CallOption) (*DeleteClientResp, error)
 }
 
-type appRpcClient struct {
+type clientRpcClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewAppRpcClient(cc grpc.ClientConnInterface) AppRpcClient {
-	return &appRpcClient{cc}
+func NewClientRpcClient(cc grpc.ClientConnInterface) ClientRpcClient {
+	return &clientRpcClient{cc}
 }
 
-func (c *appRpcClient) AppAdd(ctx context.Context, in *AddAppReq, opts ...grpc.CallOption) (*AddAppResp, error) {
-	out := new(AddAppResp)
-	err := c.cc.Invoke(ctx, AppRpc_AppAdd_FullMethodName, in, out, opts...)
+func (c *clientRpcClient) ClientAdd(ctx context.Context, in *AddClientReq, opts ...grpc.CallOption) (*AddClientResp, error) {
+	out := new(AddClientResp)
+	err := c.cc.Invoke(ctx, ClientRpc_ClientAdd_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *appRpcClient) AppInfo(ctx context.Context, in *AppInfoReq, opts ...grpc.CallOption) (*AppInfoResp, error) {
-	out := new(AppInfoResp)
-	err := c.cc.Invoke(ctx, AppRpc_AppInfo_FullMethodName, in, out, opts...)
+func (c *clientRpcClient) ClientInfo(ctx context.Context, in *ClientInfoReq, opts ...grpc.CallOption) (*ClientInfoResp, error) {
+	out := new(ClientInfoResp)
+	err := c.cc.Invoke(ctx, ClientRpc_ClientInfo_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *appRpcClient) AppList(ctx context.Context, in *ListAppReq, opts ...grpc.CallOption) (*ListAppResp, error) {
-	out := new(ListAppResp)
-	err := c.cc.Invoke(ctx, AppRpc_AppList_FullMethodName, in, out, opts...)
+func (c *clientRpcClient) ClientList(ctx context.Context, in *ListClientReq, opts ...grpc.CallOption) (*ListClientResp, error) {
+	out := new(ListClientResp)
+	err := c.cc.Invoke(ctx, ClientRpc_ClientList_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *appRpcClient) AppUpdate(ctx context.Context, in *UpdateAppReq, opts ...grpc.CallOption) (*UpdateAppResp, error) {
-	out := new(UpdateAppResp)
-	err := c.cc.Invoke(ctx, AppRpc_AppUpdate_FullMethodName, in, out, opts...)
+func (c *clientRpcClient) ClientUpdate(ctx context.Context, in *UpdateClientReq, opts ...grpc.CallOption) (*UpdateClientResp, error) {
+	out := new(UpdateClientResp)
+	err := c.cc.Invoke(ctx, ClientRpc_ClientUpdate_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *appRpcClient) AppDelete(ctx context.Context, in *DeleteAppReq, opts ...grpc.CallOption) (*DeleteAppResp, error) {
-	out := new(DeleteAppResp)
-	err := c.cc.Invoke(ctx, AppRpc_AppDelete_FullMethodName, in, out, opts...)
+func (c *clientRpcClient) ClientDelete(ctx context.Context, in *DeleteClientReq, opts ...grpc.CallOption) (*DeleteClientResp, error) {
+	out := new(DeleteClientResp)
+	err := c.cc.Invoke(ctx, ClientRpc_ClientDelete_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// AppRpcServer is the server API for AppRpc service.
-// All implementations must embed UnimplementedAppRpcServer
+// ClientRpcServer is the server API for ClientRpc service.
+// All implementations must embed UnimplementedClientRpcServer
 // for forward compatibility
-type AppRpcServer interface {
-	AppAdd(context.Context, *AddAppReq) (*AddAppResp, error)
-	AppInfo(context.Context, *AppInfoReq) (*AppInfoResp, error)
-	AppList(context.Context, *ListAppReq) (*ListAppResp, error)
-	AppUpdate(context.Context, *UpdateAppReq) (*UpdateAppResp, error)
-	AppDelete(context.Context, *DeleteAppReq) (*DeleteAppResp, error)
-	mustEmbedUnimplementedAppRpcServer()
+type ClientRpcServer interface {
+	ClientAdd(context.Context, *AddClientReq) (*AddClientResp, error)
+	ClientInfo(context.Context, *ClientInfoReq) (*ClientInfoResp, error)
+	ClientList(context.Context, *ListClientReq) (*ListClientResp, error)
+	ClientUpdate(context.Context, *UpdateClientReq) (*UpdateClientResp, error)
+	ClientDelete(context.Context, *DeleteClientReq) (*DeleteClientResp, error)
+	mustEmbedUnimplementedClientRpcServer()
 }
 
-// UnimplementedAppRpcServer must be embedded to have forward compatible implementations.
-type UnimplementedAppRpcServer struct {
+// UnimplementedClientRpcServer must be embedded to have forward compatible implementations.
+type UnimplementedClientRpcServer struct {
 }
 
-func (UnimplementedAppRpcServer) AppAdd(context.Context, *AddAppReq) (*AddAppResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppAdd not implemented")
+func (UnimplementedClientRpcServer) ClientAdd(context.Context, *AddClientReq) (*AddClientResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientAdd not implemented")
 }
-func (UnimplementedAppRpcServer) AppInfo(context.Context, *AppInfoReq) (*AppInfoResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppInfo not implemented")
+func (UnimplementedClientRpcServer) ClientInfo(context.Context, *ClientInfoReq) (*ClientInfoResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientInfo not implemented")
 }
-func (UnimplementedAppRpcServer) AppList(context.Context, *ListAppReq) (*ListAppResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppList not implemented")
+func (UnimplementedClientRpcServer) ClientList(context.Context, *ListClientReq) (*ListClientResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientList not implemented")
 }
-func (UnimplementedAppRpcServer) AppUpdate(context.Context, *UpdateAppReq) (*UpdateAppResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppUpdate not implemented")
+func (UnimplementedClientRpcServer) ClientUpdate(context.Context, *UpdateClientReq) (*UpdateClientResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientUpdate not implemented")
 }
-func (UnimplementedAppRpcServer) AppDelete(context.Context, *DeleteAppReq) (*DeleteAppResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppDelete not implemented")
+func (UnimplementedClientRpcServer) ClientDelete(context.Context, *DeleteClientReq) (*DeleteClientResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ClientDelete not implemented")
 }
-func (UnimplementedAppRpcServer) mustEmbedUnimplementedAppRpcServer() {}
+func (UnimplementedClientRpcServer) mustEmbedUnimplementedClientRpcServer() {}
 
-// UnsafeAppRpcServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to AppRpcServer will
+// UnsafeClientRpcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ClientRpcServer will
 // result in compilation errors.
-type UnsafeAppRpcServer interface {
-	mustEmbedUnimplementedAppRpcServer()
+type UnsafeClientRpcServer interface {
+	mustEmbedUnimplementedClientRpcServer()
 }
 
-func RegisterAppRpcServer(s grpc.ServiceRegistrar, srv AppRpcServer) {
-	s.RegisterService(&AppRpc_ServiceDesc, srv)
+func RegisterClientRpcServer(s grpc.ServiceRegistrar, srv ClientRpcServer) {
+	s.RegisterService(&ClientRpc_ServiceDesc, srv)
 }
 
-func _AppRpc_AppAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AddAppReq)
+func _ClientRpc_ClientAdd_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddClientReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppRpcServer).AppAdd(ctx, in)
+		return srv.(ClientRpcServer).ClientAdd(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppRpc_AppAdd_FullMethodName,
+		FullMethod: ClientRpc_ClientAdd_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppRpcServer).AppAdd(ctx, req.(*AddAppReq))
+		return srv.(ClientRpcServer).ClientAdd(ctx, req.(*AddClientReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppRpc_AppInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AppInfoReq)
+func _ClientRpc_ClientInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ClientInfoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppRpcServer).AppInfo(ctx, in)
+		return srv.(ClientRpcServer).ClientInfo(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppRpc_AppInfo_FullMethodName,
+		FullMethod: ClientRpc_ClientInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppRpcServer).AppInfo(ctx, req.(*AppInfoReq))
+		return srv.(ClientRpcServer).ClientInfo(ctx, req.(*ClientInfoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppRpc_AppList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAppReq)
+func _ClientRpc_ClientList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListClientReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppRpcServer).AppList(ctx, in)
+		return srv.(ClientRpcServer).ClientList(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppRpc_AppList_FullMethodName,
+		FullMethod: ClientRpc_ClientList_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppRpcServer).AppList(ctx, req.(*ListAppReq))
+		return srv.(ClientRpcServer).ClientList(ctx, req.(*ListClientReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppRpc_AppUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAppReq)
+func _ClientRpc_ClientUpdate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateClientReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppRpcServer).AppUpdate(ctx, in)
+		return srv.(ClientRpcServer).ClientUpdate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppRpc_AppUpdate_FullMethodName,
+		FullMethod: ClientRpc_ClientUpdate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppRpcServer).AppUpdate(ctx, req.(*UpdateAppReq))
+		return srv.(ClientRpcServer).ClientUpdate(ctx, req.(*UpdateClientReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppRpc_AppDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAppReq)
+func _ClientRpc_ClientDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteClientReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppRpcServer).AppDelete(ctx, in)
+		return srv.(ClientRpcServer).ClientDelete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppRpc_AppDelete_FullMethodName,
+		FullMethod: ClientRpc_ClientDelete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppRpcServer).AppDelete(ctx, req.(*DeleteAppReq))
+		return srv.(ClientRpcServer).ClientDelete(ctx, req.(*DeleteClientReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// AppRpc_ServiceDesc is the grpc.ServiceDesc for AppRpc service.
+// ClientRpc_ServiceDesc is the grpc.ServiceDesc for ClientRpc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var AppRpc_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "sysClient.AppRpc",
-	HandlerType: (*AppRpcServer)(nil),
+var ClientRpc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "sysClient.clientRpc",
+	HandlerType: (*ClientRpcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AppAdd",
-			Handler:    _AppRpc_AppAdd_Handler,
+			MethodName: "clientAdd",
+			Handler:    _ClientRpc_ClientAdd_Handler,
 		},
 		{
-			MethodName: "AppInfo",
-			Handler:    _AppRpc_AppInfo_Handler,
+			MethodName: "clientInfo",
+			Handler:    _ClientRpc_ClientInfo_Handler,
 		},
 		{
-			MethodName: "AppList",
-			Handler:    _AppRpc_AppList_Handler,
+			MethodName: "clientList",
+			Handler:    _ClientRpc_ClientList_Handler,
 		},
 		{
-			MethodName: "AppUpdate",
-			Handler:    _AppRpc_AppUpdate_Handler,
+			MethodName: "clientUpdate",
+			Handler:    _ClientRpc_ClientUpdate_Handler,
 		},
 		{
-			MethodName: "AppDelete",
-			Handler:    _AppRpc_AppDelete_Handler,
+			MethodName: "clientDelete",
+			Handler:    _ClientRpc_ClientDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

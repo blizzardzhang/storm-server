@@ -9,9 +9,9 @@ info(
 )
 
 type (
-    AddAppReq {
+    AddClientReq {
         Name string `json:"name"`
-        AppId string `json:"appId"`
+        ClientId string `json:"clientId"`
         Key string `json:"key"`
         Secret string `json:"secret"`
         GrantType string `json:"grantType"`
@@ -20,17 +20,17 @@ type (
         AccessTokenValidity int64 `json:"accessTokenValidity"`
         RefreshTokenValidity int64 `json:"refreshTokenValidity"`
     }
-    AddAppResp {
+    AddClientResp {
         Data string `json:"data"`
     }
 
-    AppInfoReq {
+    ClientInfoReq {
         Id string `json:"id"`
     }
-    AppInfoResp {
+    ClientInfoResp {
         Id string `json:"id"`
         Name string `json:"name"`
-        AppId string `json:"appId"`
+        ClientId string `json:"clientId"`
         Key string `json:"key"`
         Secret string `json:"secret"`
         GrantType string `json:"grantType"`
@@ -44,23 +44,23 @@ type (
         UpdateUser string `json:"updateUser"`
     }
 
-    ListAppReq {
+    ListClientReq {
         Current int `json:"current,default=1"`
         PageSize int `json:"pageSize,default=10"`
         Name string `json:"name,optional"`
     }
-    ListAppResp {
-        Records []AppInfoResp `json:"records"`
+    ListClientResp {
+        Records []ClientInfoResp `json:"records"`
         Current int `json:"current"`
         PageSize int `json:"pageSize"`
         Total int `json:"total"`
         TotalPage int `json:"totalPage"`
     }
 
-    UpdateAppReq {
+    UpdateClientReq {
         Id string `json:"id"`
         Name string `json:"name"`
-        AppId string `json:"appId"`
+        ClientId string `json:"clientId"`
         Key string `json:"key"`
         Secret string `json:"secret"`
         GrantType string `json:"grantType"`
@@ -69,14 +69,14 @@ type (
         AccessTokenValidity int64 `json:"accessTokenValidity"`
         Status int64 `json:"status"`
     }
-    UpdateAppResp {
+    UpdateClientResp {
         Data string `json:"data"`
     }
 
-    DeleteAppReq {
+    DeleteClientReq {
         Ids []string `json:"ids"`
     }
-    DeleteAppResp {
+    DeleteClientResp {
         Data string `json:"data"`
     }
 )
@@ -85,29 +85,29 @@ type (
 
 @server(
     jwt: JwtAuth
-    group: sys/app
+    group: sys/client
     middleware: CheckUrl
-    prefix: /api/sys/app
+    prefix: /api/sys/client
 )
 service sys-api {
     // @doc "新增客户端"
-    @handler SaveApp
-    post /save (AddAppReq) returns (AddAppResp)
+    @handler SaveClient
+    post /save (AddClientReq) returns (AddClientResp)
 
     //@doc "客户端分页"
-    @handler ListApp
-    post /list (ListAppReq) returns (ListAppResp)
+    @handler ListClient
+    post /list (ListClientReq) returns (ListClientResp)
 
     // @doc "客户端详情""
-    @handler AppDetail
-    post /info (AppInfoReq) returns (AppInfoResp)
+    @handler ClientDetail
+    post /info (ClientInfoReq) returns (ClientInfoResp)
 
     // @doc "修改客户端"
-    @handler UpdateApp
-    post /update (UpdateAppReq) returns (UpdateAppResp)
+    @handler UpdateClient
+    post /update (UpdateClientReq) returns (UpdateClientResp)
 
     // @doc "删除客户端"
-    @handler DeleteApp
-    post /delete (DeleteAppReq) returns (DeleteAppResp)
+    @handler DeleteClient
+    post /delete (DeleteClientReq) returns (DeleteClientResp)
 }
 

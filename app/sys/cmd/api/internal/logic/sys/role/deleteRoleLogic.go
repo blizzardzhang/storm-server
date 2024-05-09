@@ -2,6 +2,7 @@ package role
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/rolerpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,14 @@ func NewDeleteRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteRoleLogic) DeleteRole(req *types.RoleDeleteReq) (resp *types.RoleDeleteResp, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.RoleRpc.RoleDelete(l.ctx, &rolerpc.DeleteRoleReq{
+		Ids: req.Ids,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.RoleDeleteResp{
+		Data: res.Data,
+	}, nil
 }

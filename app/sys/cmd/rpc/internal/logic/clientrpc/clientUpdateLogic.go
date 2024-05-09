@@ -1,4 +1,4 @@
-package apprpclogic
+package clientrpclogic
 
 import (
 	"context"
@@ -12,24 +12,24 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AppUpdateLogic struct {
+type ClientUpdateLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewAppUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppUpdateLogic {
-	return &AppUpdateLogic{
+func NewClientUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ClientUpdateLogic {
+	return &ClientUpdateLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *AppUpdateLogic) AppUpdate(in *sysClient.UpdateAppReq) (*sysClient.UpdateAppResp, error) {
+func (l *ClientUpdateLogic) ClientUpdate(in *sysClient.UpdateClientReq) (*sysClient.UpdateClientResp, error) {
 	updates := map[string]interface{}{
 		"name":                   in.Name,
-		"app_id":                 in.AppId,
+		"app_id":                 in.ClientId,
 		"key":                    in.Key,
 		"secret":                 in.Secret,
 		"grant_type":             in.GrantType,
@@ -45,7 +45,7 @@ func (l *AppUpdateLogic) AppUpdate(in *sysClient.UpdateAppReq) (*sysClient.Updat
 		return nil, err
 	}
 
-	return &sysClient.UpdateAppResp{
+	return &sysClient.UpdateClientResp{
 		Data: strconv.FormatInt(result.RowsAffected, 10),
 	}, nil
 }

@@ -1,4 +1,4 @@
-package apprpclogic
+package clientrpclogic
 
 import (
 	"context"
@@ -10,34 +10,34 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AppListLogic struct {
+type ClientListLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewAppListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppListLogic {
-	return &AppListLogic{
+func NewClientListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ClientListLogic {
+	return &ClientListLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *AppListLogic) AppList(in *sysClient.ListAppReq) (*sysClient.ListAppResp, error) {
-	var apps []sys.Client
+func (l *ClientListLogic) ClientList(in *sysClient.ListClientReq) (*sysClient.ListClientResp, error) {
+	var clients []sys.Client
 	var total int64
 	//特别注意，需要加 Db.Model(&sys.Client{}).Count(&total) 分页查询才正常
-	tx := l.svcCtx.Db.Model(&sys.Client{}).Count(&total).Offset(int((in.Current - 1) * in.PageSize)).Limit(int(in.PageSize)).Find(&apps)
+	tx := l.svcCtx.Db.Model(&sys.Client{}).Count(&total).Offset(int((in.Current - 1) * in.PageSize)).Limit(int(in.PageSize)).Find(&clients)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
 
-	var result []*sysClient.AppInfoResp
-	for _, item := range apps {
-		result = append(result, &sysClient.AppInfoResp{
+	var result []*sysClient.ClientInfoResp
+	for _, item := range clients {
+		result = append(result, &sysClient.ClientInfoResp{
 			Id:                   item.Id,
-			AppId:                item.ClientId,
+			ClientId:             item.ClientId,
 			Name:                 item.Name,
 			Key:                  item.Key,
 			Secret:               item.Secret,
@@ -53,7 +53,7 @@ func (l *AppListLogic) AppList(in *sysClient.ListAppReq) (*sysClient.ListAppResp
 	}
 	totalPages := (total + in.PageSize - 1) / in.PageSize // 使用向上取整的除法计算总页数
 
-	return &sysClient.ListAppResp{
+	return &sysClient.ListClientResp{
 		Current:   in.Current,
 		PageSize:  in.PageSize,
 		List:      result,

@@ -2,6 +2,7 @@ package permission
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/permissionrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,22 @@ func NewUpdatePermissionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *UpdatePermissionLogic) UpdatePermission(req *types.UpdatePermissionReq) (resp *types.UpdatePermissionResp, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.PermissionRpc.PermissionUpdate(l.ctx, &permissionrpc.UpdatePermissionReq{
+		Id:        req.Id,
+		Sort:      int64(req.Sort),
+		Code:      req.Code,
+		Category:  req.Category,
+		ParentId:  req.ParentId,
+		Component: req.Component,
+		Path:      req.Path,
+		Icon:      req.Icon,
+		Name:      req.Name,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.UpdatePermissionResp{
+		Data: res.Data,
+	}, nil
 }

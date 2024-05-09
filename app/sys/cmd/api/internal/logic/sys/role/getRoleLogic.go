@@ -2,6 +2,7 @@ package role
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/rolerpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,24 @@ func NewGetRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetRoleLo
 }
 
 func (l *GetRoleLogic) GetRole(req *types.RoleInfoReq) (resp *types.RoleInfoResp, err error) {
-	// todo: add your logic here and delete this line
+	info, err := l.svcCtx.RoleRpc.RoleInfo(l.ctx, &rolerpc.RoleInfoReq{
+		Id: req.Id,
+	})
+	if err != nil {
+		return nil, err
+	}
 
-	return
+	return &types.RoleInfoResp{
+		Id:         info.Id,
+		Name:       info.Name,
+		Code:       info.Code,
+		Sort:       int(info.Sort),
+		Remark:     info.Remark,
+		Type:       int(info.Type),
+		Status:     int(info.Status),
+		CreateAt:   info.CreateAt,
+		CreateUser: info.CreateUser,
+		UpdateAt:   info.UpdateAt,
+		UpdateUser: info.UpdateUser,
+	}, nil
 }

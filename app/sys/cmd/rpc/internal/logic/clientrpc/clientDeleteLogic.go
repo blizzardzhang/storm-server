@@ -1,4 +1,4 @@
-package apprpclogic
+package clientrpclogic
 
 import (
 	"context"
@@ -11,26 +11,26 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type AppDeleteLogic struct {
+type ClientDeleteLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewAppDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppDeleteLogic {
-	return &AppDeleteLogic{
+func NewClientDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ClientDeleteLogic {
+	return &ClientDeleteLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *AppDeleteLogic) AppDelete(in *sysClient.DeleteAppReq) (*sysClient.DeleteAppResp, error) {
+func (l *ClientDeleteLogic) ClientDelete(in *sysClient.DeleteClientReq) (*sysClient.DeleteClientResp, error) {
 	result := l.svcCtx.Db.Delete(&sys.Client{}, in.Ids)
 	if result.Error != nil {
 		return nil, result.Error
 	}
-	return &sysClient.DeleteAppResp{
+	return &sysClient.DeleteClientResp{
 		Data: strconv.FormatInt(result.RowsAffected, 10),
 	}, nil
 }

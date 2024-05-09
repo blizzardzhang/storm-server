@@ -2,6 +2,7 @@ package permission
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/permissionrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,13 @@ func NewDeletePermissionLogic(ctx context.Context, svcCtx *svc.ServiceContext) *
 }
 
 func (l *DeletePermissionLogic) DeletePermission(req *types.DeletePermissionReq) (resp *types.DeletePermissionResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.PermissionRpc.PermissionDelete(l.ctx, &permissionrpc.DeletePermissionReq{
+		Ids: req.Ids,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.DeletePermissionResp{
+		Data: res.Data,
+	}, nil
 }

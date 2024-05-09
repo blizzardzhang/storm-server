@@ -1,9 +1,9 @@
-package role
+package client
 
 import (
 	"context"
 	"github.com/jinzhu/copier"
-	"storm-server/app/sys/cmd/rpc/client/rolerpc"
+	"storm-server/app/sys/cmd/rpc/client/clientrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -11,36 +11,36 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type ListRoleLogic struct {
+type ListClientLogic struct {
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 }
 
-func NewListRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListRoleLogic {
-	return &ListRoleLogic{
+func NewListClientLogic(ctx context.Context, svcCtx *svc.ServiceContext) *ListClientLogic {
+	return &ListClientLogic{
 		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
 	}
 }
 
-func (l *ListRoleLogic) ListRole(req *types.RoleListReq) (resp *types.RoleListResp, err error) {
-	res, err := l.svcCtx.RoleRpc.RoleList(l.ctx, &rolerpc.ListRoleReq{
-		PageSize: int64(req.PageSize),
+func (l *ListClientLogic) ListClient(req *types.ListClientReq) (resp *types.ListClientResp, err error) {
+	res, err := l.svcCtx.ClientRpc.ClientList(l.ctx, &clientrpc.ListClientReq{
 		Current:  int64(req.Current),
+		PageSize: int64(req.PageSize),
 		Name:     req.Name,
 	})
 	if err != nil {
 		return nil, err
 	}
-	var list []types.RoleInfoResp
+	var list []types.ClientInfoResp
 	for _, item := range res.List {
-		var role types.RoleInfoResp
-		_ = copier.Copy(&role, item)
-		list = append(list, role)
+		var app types.ClientInfoResp
+		_ = copier.Copy(&app, item)
+		list = append(list, app)
 	}
-	return &types.RoleListResp{
+	return &types.ListClientResp{
 		Records:   list,
 		Current:   int(res.Current),
 		PageSize:  int(res.PageSize),

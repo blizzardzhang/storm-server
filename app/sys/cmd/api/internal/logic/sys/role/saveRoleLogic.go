@@ -2,6 +2,7 @@ package role
 
 import (
 	"context"
+	"storm-server/app/sys/cmd/rpc/client/rolerpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +25,17 @@ func NewSaveRoleLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SaveRole
 }
 
 func (l *SaveRoleLogic) SaveRole(req *types.RoleAddReq) (resp *types.RoleAddResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	res, err := l.svcCtx.RoleRpc.RoleAdd(l.ctx, &rolerpc.AddRoleReq{
+		Name:   req.Name,
+		Code:   req.Code,
+		Sort:   int64(req.Sort),
+		Remark: req.Remark,
+		Type:   int64(req.Type),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &types.RoleAddResp{
+		Data: res.Data,
+	}, nil
 }

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"storm-server/app/sys/cmd/rpc/internal/config"
-	apprpcServer "storm-server/app/sys/cmd/rpc/internal/server/apprpc"
+	clientrpcServer "storm-server/app/sys/cmd/rpc/internal/server/clientrpc"
 	departmentrpcServer "storm-server/app/sys/cmd/rpc/internal/server/departmentrpc"
 	permissionrpcServer "storm-server/app/sys/cmd/rpc/internal/server/permissionrpc"
 	rolerpcServer "storm-server/app/sys/cmd/rpc/internal/server/rolerpc"
@@ -31,7 +31,7 @@ func main() {
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		sysClient.RegisterUserRpcServer(grpcServer, userrpcServer.NewUserRpcServer(ctx))
-		sysClient.RegisterAppRpcServer(grpcServer, apprpcServer.NewAppRpcServer(ctx))
+		sysClient.RegisterClientRpcServer(grpcServer, clientrpcServer.NewClientRpcServer(ctx))
 		sysClient.RegisterDepartmentRpcServer(grpcServer, departmentrpcServer.NewDepartmentRpcServer(ctx))
 		sysClient.RegisterRoleRpcServer(grpcServer, rolerpcServer.NewRoleRpcServer(ctx))
 		sysClient.RegisterPermissionRpcServer(grpcServer, permissionrpcServer.NewPermissionRpcServer(ctx))

@@ -2,6 +2,8 @@ package user
 
 import (
 	"context"
+	"github.com/jinzhu/copier"
+	"storm-server/app/sys/cmd/rpc/client/userrpc"
 
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
@@ -24,7 +26,22 @@ func NewLoginLogic(ctx context.Context, svcCtx *svc.ServiceContext) *LoginLogic 
 }
 
 func (l *LoginLogic) Login(req *types.LoginRequest) (resp *types.LoginResp, err error) {
-	// todo: add your logic here and delete this line
+	res, err := l.svcCtx.UserRpc.Login(l.ctx, &userrpc.LoginReq{
+		AppId:    req.AppId,
+		Account:  req.Account,
+		Password: req.Password,
+	})
+	if err != nil {
+		return nil, err
+	}
+	var user types.UserInfo
+	_ = copier.Copy(&user, res.UserInfo)
 
-	return
+	return &types.LoginResp{
+		AccessToken:  res.AccessToken,
+		AccessExpire: res.AccessExpire,
+		RefreshAfter: res.RefreshAfter,
+		User:         user,
+		Permissions:  res.Permissions,
+	}, nil
 }

@@ -2,7 +2,6 @@ package user
 
 import (
 	"context"
-
 	"storm-server/app/sys/cmd/api/internal/svc"
 	"storm-server/app/sys/cmd/api/internal/types"
 
@@ -24,7 +23,5 @@ func NewDeleteUserLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Delete
 }
 
 func (l *DeleteUserLogic) DeleteUser(req *types.DeleteUserReq) (resp *types.DeleteUserResp, err error) {
-	// todo: add your logic here and delete this line
-
-	return
+	return nil, err
 }
