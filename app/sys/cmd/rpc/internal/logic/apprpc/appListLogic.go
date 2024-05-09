@@ -25,10 +25,10 @@ func NewAppListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppListLo
 }
 
 func (l *AppListLogic) AppList(in *sysClient.ListAppReq) (*sysClient.ListAppResp, error) {
-	var apps []sys.App
+	var apps []sys.Client
 	var total int64
-	//特别注意，需要加 Db.Model(&sys.App{}).Count(&total) 分页查询才正常
-	tx := l.svcCtx.Db.Model(&sys.App{}).Count(&total).Offset(int((in.Current - 1) * in.PageSize)).Limit(int(in.PageSize)).Find(&apps)
+	//特别注意，需要加 Db.Model(&sys.Client{}).Count(&total) 分页查询才正常
+	tx := l.svcCtx.Db.Model(&sys.Client{}).Count(&total).Offset(int((in.Current - 1) * in.PageSize)).Limit(int(in.PageSize)).Find(&apps)
 	if tx.Error != nil {
 		return nil, tx.Error
 	}
@@ -37,7 +37,7 @@ func (l *AppListLogic) AppList(in *sysClient.ListAppReq) (*sysClient.ListAppResp
 	for _, item := range apps {
 		result = append(result, &sysClient.AppInfoResp{
 			Id:                   item.Id,
-			AppId:                item.AppId,
+			AppId:                item.ClientId,
 			Name:                 item.Name,
 			Key:                  item.Key,
 			Secret:               item.Secret,

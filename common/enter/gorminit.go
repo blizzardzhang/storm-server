@@ -27,15 +27,3 @@ func InitGorm(MysqlDatasource string, tablePrefix string, models []interface{}) 
 	fmt.Println("Migrate tables success")
 	return db
 }
-
-/*func InitEnt(Datasource string) {
-	client, err := ent.Open("mysql", Datasource)
-	if err != nil {
-		log.Fatalf("failed opening connection to mysql: %v", err)
-	}
-	defer client.Close()
-	// Run the auto migration tool.
-	if err := client.Schema.Create(context.Background()); err != nil {
-		log.Fatalf("failed creating schema resources: %v", err)
-	}
-}*/

@@ -13,7 +13,7 @@ type ServiceContext struct {
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
-	db := enter.InitGorm(c.DB.DataSource, "test_", sys.Models)
+	db := enter.InitGorm(c.DB.DataSource, "storm_", sys.Models)
 	return &ServiceContext{
 		Config: c,
 		Db:     db,

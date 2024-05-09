@@ -25,7 +25,7 @@ func NewAppInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppInfoLo
 }
 
 func (l *AppInfoLogic) AppInfo(in *sysClient.AppInfoReq) (*sysClient.AppInfoResp, error) {
-	var app sys.App
+	var app sys.Client
 	result := l.svcCtx.Db.First(&app, "id = ?", in.Id)
 	if result.Error != nil {
 		return nil, result.Error
@@ -33,7 +33,7 @@ func (l *AppInfoLogic) AppInfo(in *sysClient.AppInfoReq) (*sysClient.AppInfoResp
 
 	return &sysClient.AppInfoResp{
 		Id:                   app.Id,
-		AppId:                app.AppId,
+		AppId:                app.ClientId,
 		Name:                 app.Name,
 		Secret:               app.Secret,
 		GrantType:            app.GrantType,

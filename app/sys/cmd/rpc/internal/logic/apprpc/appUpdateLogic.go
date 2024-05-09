@@ -38,7 +38,7 @@ func (l *AppUpdateLogic) AppUpdate(in *sysClient.UpdateAppReq) (*sysClient.Updat
 		"refresh_token_validity": in.RefreshTokenValidity,
 		"additional_information": in.AdditionalInfo,
 	}
-	var app sys.App
+	var app sys.Client
 	result := l.svcCtx.Db.Model(&app).Where("id = ?", in.Id).Updates(updates)
 	if result.Error != nil {
 		err := errors.New("更新失败:" + result.Error.Error())

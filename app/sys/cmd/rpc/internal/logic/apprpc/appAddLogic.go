@@ -27,9 +27,9 @@ func NewAppAddLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppAddLogi
 }
 
 func (l *AppAddLogic) AppAdd(in *sysClient.AddAppReq) (*sysClient.AddAppResp, error) {
-	app := sys.App{
+	app := sys.Client{
 		Name:                  in.Name,
-		AppId:                 in.AppId,
+		ClientId:              in.AppId,
 		Key:                   in.Key,
 		Secret:                in.Secret,
 		GrantType:             in.GrantType,

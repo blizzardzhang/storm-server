@@ -8,7 +8,7 @@ import (
 
 var Models = []interface{}{
 	&User{},
-	&App{},
+	&Client{},
 	&Department{},
 	&Role{},
 	&Permission{},
@@ -42,21 +42,20 @@ func (model Model) BeforeUpdate(db *gorm.DB) (err error) {
 
 // User user
 type User struct {
-	Model
-	AppId        string `gorm:"size:32;" json:"appId" form:"appId"`
+	ClientId     string `gorm:"size:32;" json:"ClientId" form:"clientId"`
 	DepartmentId string `gorm:"size:50;" json:"departmentId" form:"departmentId"`
 	Account      string `gorm:"size:32;unique;" json:"account" form:"account"`
 	Name         string `gorm:"size:50;" json:"name" form:"name"`
 	Nickname     string `gorm:"size:50;" json:"nickname" form:"nickname"`
 	Password     string `gorm:"size:100" json:"password" form:"password"`
 	Phone        string `gorm:"size:20;" json:"phone" form:"phone"`
+	Model
 }
 
-// App app
-type App struct {
-	Model
+// Client app
+type Client struct {
 	Name                  string `gorm:"size:50;" json:"name" form:"name"`
-	AppId                 string `gorm:"size:50;" json:"appId" form:"appId"`
+	ClientId              string `gorm:"size:50;" json:"clientId" form:"clientId"`
 	Key                   string `gorm:"size:100;" json:"key" form:"key"`
 	Secret                string `gorm:"size:100;" json:"secret" form:"secret"`
 	GrantType             string `gorm:"size:200;" json:"grantType" form:"grantType"`
@@ -64,15 +63,16 @@ type App struct {
 	AdditionalInformation string `gorm:"size:200;" json:"additionalInformation" form:"additionalInformation"`
 	AccessTokenValidity   int64  `gorm:"not null" json:"accessTokenValidity" form:"accessTokenValidity"`
 	RefreshTokenValidity  int64  `gorm:"not null" json:"refreshTokenValidity" form:"refreshTokenValidity"`
+	Model
 }
 
 // Department dept
 type Department struct {
-	Model
 	ParentId  string `gorm:"size:50;index:idx_dept_parent_id" json:"parentId" form:"parentId"`
 	Ancestors string `gorm:"size:1000;" json:"ancestors" form:"ancestors"`
 	Name      string `gorm:"size:50;" json:"name" form:"name"`
 	Sort      int    `gorm:"type:int(11);" json:"sort" form:"sort"`
+	Model
 }
 
 // Role role
@@ -87,7 +87,6 @@ type Role struct {
 
 // Permission perm
 type Permission struct {
-	Model
 	ParentId  string `json:"parentId" form:"parentId"`          // 上级菜单
 	Name      string `gorm:"size:50" json:"name" form:"name"`   // 名称
 	Code      string `gorm:"size:50" json:"title" form:"title"` // 标题
@@ -96,18 +95,19 @@ type Permission struct {
 	Path      string `gorm:"size:100" json:"path" form:"path"`           // 路径
 	Sort      int    `gorm:"not null;default:0" json:"sort" form:"sort"` // 排序
 	Category  string `gorm:"size:64" json:"category" form:"category"`
+	Model
 }
 
 // UserRole user_role
 type UserRole struct {
-	Model
 	UserId string `gorm:"size:50,uniqueIndex:idx_user_role" json:"userId" form:"userId"`
 	RoleId string `gorm:"size:50,uniqueIndex:idx_user_role" json:"roleId" form:"roleId"`
+	Model
 }
 
 // RolePermission role_permission
 type RolePermission struct {
-	Model
 	RoleId       string `gorm:"size:50;uniqueIndex:idx_role_permission" json:"roleId" form:"roleId"`
-	PermissionId string `gorm:"size:50;uniqueIndex:idx_role_permission" json:"PermissionId" form:"PermissionId"`
+	PermissionId string `gorm:"size:50;uniqueIndex:idx_role_permission" json:"permissionId" form:"permissionId"`
+	Model
 }

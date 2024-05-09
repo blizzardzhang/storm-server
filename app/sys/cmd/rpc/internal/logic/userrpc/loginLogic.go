@@ -43,8 +43,8 @@ func (l *LoginLogic) Login(in *sysClient.LoginReq) (*sysClient.LoginResp, error)
 		return nil, errors.Wrap(err, "LoginLogic.Login")
 	}
 	//3.查询app 根据app获取token有效期
-	var app sys.App
-	tx := l.svcCtx.Db.Take(&app, "app_id = ?", in.AppId)
+	var client sys.Client
+	tx := l.svcCtx.Db.Take(&client, "app_id = ?", in.AppId)
 	if tx.Error != nil {
 		err = errors.New("app不存在")
 		return nil, errors.Wrap(err, "LoginLogic.Login")
@@ -52,7 +52,7 @@ func (l *LoginLogic) Login(in *sysClient.LoginReq) (*sysClient.LoginResp, error)
 
 	now := time.Now().Unix()
 	accessSecret := l.svcCtx.Config.JwtAuth.AccessSecret
-	validity := app.AccessTokenValidity
+	validity := client.AccessTokenValidity
 	userId := user.Id
 	account := user.Account
 	token, err := l.getJwtToken(accessSecret, now, validity, userId, account)
